@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: feeds
+    labels:
+        app: feeds
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+          app: feeds
+  template:
+      metadata:
+          labels:
+              app: feeds
+      spec:
+          containers:
+          - image: supermike2020/udagram-feeds
+            name: feeds
+            imagePullPolicy: Always          
+            ports:
+                - containerPort: 8080
