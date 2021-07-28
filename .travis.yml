@@ -1,0 +1,40 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+# Pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version # print the version for logging
+  - cd feeds
+  - docker build --build-arg POSTGRES_HOST --build-arg POSTGRES_USERNAME 
+    --build-arg POSTGRES_PASSWORD --build-arg POSTGRES_DB 
+    --build-arg AWS_BUCKET --build-arg AWS_REGION 
+    --build-arg JWT_SECRET --build-arg URL -t feeds .
+  - docker tag feeds supermike2020/udagram-feeds:latest
+  - cd ..
+  - cd users
+  - docker build --build-arg POSTGRES_HOST --build-arg POSTGRES_USERNAME 
+    --build-arg POSTGRES_PASSWORD --build-arg POSTGRES_DB 
+    --build-arg AWS_BUCKET --build-arg AWS_REGION 
+    --build-arg JWT_SECRET --build-arg URL -t users .
+  - docker tag users supermike2020/udagram-users:latest
+  - cd ..
+  - cd reverse-proxy
+  - docker build -t udagram-reverse-proxy .
+  - docker tag udagram-reverse-proxy supermike2020/udagram-reverse-proxy:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push supermike2020/udagram-feeds:latest
+  - docker push supermike2020/udagram-users:latest
+  - docker push supermike2020/udagram-reverse-proxy:latest
