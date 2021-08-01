@@ -32,9 +32,17 @@ script:
   - cd reverse-proxy
   - docker build -t udagram-reverse-proxy .
   - docker tag udagram-reverse-proxy supermike2020/udagram-reverse-proxy:latest
+  - cd ..
+  - cd comments
+  - docker build --build-arg POSTGRES_HOST --build-arg POSTGRES_USERNAME 
+    --build-arg POSTGRES_PASSWORD --build-arg POSTGRES_DB 
+    --build-arg AWS_BUCKET --build-arg AWS_REGION 
+    --build-arg JWT_SECRET --build-arg URL -t comments .
+  - docker tag comments supermike2020/udagram-comments:latest 
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push supermike2020/udagram-feeds:latest
   - docker push supermike2020/udagram-users:latest
   - docker push supermike2020/udagram-reverse-proxy:latest
+  - docker push supermike2020/udagram-comments:latest
