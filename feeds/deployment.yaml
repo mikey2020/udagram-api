@@ -15,7 +15,7 @@ spec:
               app: feeds
       spec:
           containers:
-          - image: supermike2020/udagram-feeds
+          - image: supermike2020/udagram-feeds:v2
             name: feeds
             imagePullPolicy: Always          
             ports:
