@@ -9,6 +9,7 @@ Backend RESTful API - Node-Express application
 * Udagram is being extended to contain a comments service
  
 ## Steps to run
+
 ### Run without docker
 * To run a particular service locally
 * cd into the service directory e.g `cd feeds`
