@@ -7,7 +7,7 @@ services:
 
 # Pre-testing installs
 install:
-  - echo "nothing needs to be installed"
+  - echo "nothing to install"
 
 # Scripts to be run such as tests
 before_script:
@@ -46,3 +46,4 @@ after_success:
   - docker push supermike2020/udagram-users:latest
   - docker push supermike2020/udagram-reverse-proxy:latest
   - docker push supermike2020/udagram-comments:latest
+  - kubectl get pods
