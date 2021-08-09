@@ -7,9 +7,15 @@ Backend RESTful API - Node-Express application
 
 ## Monolith to Microservices 
 * Udagram is being extended to contain a comments service
- 
-## Steps to run
+- User can add a feed to comment 
+- User can get comments related to feed 
+- A comment can be added to a feed
 
+### Routes to access comments service
+- To fetch a comment - GET `http://localhost:8080/api/v0/comment/:feed_id`
+- To create a comment - POST `http://localhost:8080/api/v0/comment/:feed_id`
+
+## Steps to run
 ### Run without docker
 * To run a particular service locally
 * cd into the service directory e.g `cd feeds`

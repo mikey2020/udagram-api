@@ -1,2 +1,3 @@
 set_env.sh
+*.swp
 node_modules/
